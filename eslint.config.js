@@ -33,6 +33,13 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      "react/prop-types": 0,
     },
+
+    overrides:[
+      {
+        files:["*.js", "*.jsx"],
+      }
+    ]
   },
 ]
