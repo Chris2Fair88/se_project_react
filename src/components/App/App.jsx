@@ -1,18 +1,49 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react';
 import './App.css'
 import Header from '../Header/Header'
 import Main from '../Main/Main'
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
+import ItemModal from '../ItemModal/ItemModal';
+import { processWeatherData } from '../../utils/weatherApi';
+import { getWeather } from '../../utils/weatherApi';
+import { coordinates, APIkey } from '../../utils/constants';
+import Footer from '../Footer/Footer';
 
 function App() {
-const [weatherData, setWeatherData] = useState({type: "hot"});
+const [weatherData, setWeatherData] = useState({type: "", temp: 0, city: ""});
+const [activeModal, setActiveModal] = useState("");
+const [selectedCard, setSelectedCard] = useState("");
+const handleAddClick = () => {
+  setActiveModal("add-garment");
+}
+const onClose = () => {
+  setActiveModal("");
+}
+const handleCardClick = (card) => {
+  setActiveModal("preview");
+  setSelectedCard(card);
+}
+
+useEffect(() => {
+  getWeather(coordinates, APIkey)
+    .then((data) => {
+       const processData = processWeatherData(data);
+       setWeatherData(processData);
+    })
+    .catch((err) => {
+      console.error(err);
+    }
+    );
+}, []);
+  
+
   return (
       <div className='page'>
         <div className='page__content'>
-          <Header />
-          <Main weatherData={weatherData}/>
+          <Header handleAddClick={handleAddClick}  handleCardClick={handleCardClick} weatherData={weatherData}/>
+          <Main weatherData={weatherData} handleCardClick={handleCardClick}/>
         </div>
-        <ModalWithForm title="New garment" buttonText="Add garment">
+        <ModalWithForm title="New garment" buttonText="Add garment" activeModal={activeModal} onClose={onClose}>
         <label htmlFor="name" className="modal__label">Name{""}
             <input className="modal__input" type="text" id="name" placeholder="Name" />
             </label>
@@ -53,7 +84,11 @@ const [weatherData, setWeatherData] = useState({type: "hot"});
             </div> 
             </fieldset>
         </ModalWithForm>
+        <ItemModal activeModal={activeModal} card={selectedCard} onClose={onClose} />
+        <Footer />
     </div>
+    
+    
   )
 }
 

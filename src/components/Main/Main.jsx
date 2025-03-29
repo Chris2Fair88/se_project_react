@@ -2,19 +2,19 @@ import WeatherCard from "../WeatherCard/WeatherCard";
 import {defaultClothingItems} from "../../utils/constants";
 import ItemCard from "../ItemCard/ItemCard";
 import './Main.css';
-function Main({weatherData}) {
+function Main({weatherData, handleCardClick}) {
  const currentDate = new Date().toLocaleString('default',{month: 'long', day: 'numeric'});
   return (
    <>
    <main>
-   <WeatherCard />
+   <WeatherCard temperature={weatherData.temp.F} isDay={weatherData.isDay} condition={weatherData.condition}/>
    <section className="cards">
-    <p className="cards__text">Today is 75 &deg; F / You may want to wear:</p>
+    <p className="cards__text">Today is {weatherData.temp.F} &deg; F / You may want to wear:</p>
     <ul className="cards__list">
       {defaultClothingItems.filter((item) =>{
         return item.weather === weatherData.type;
       }).map((item) => {
-        return <ItemCard item={item} key={item._id} />;
+        return <ItemCard item={item} key={item._id} onCardClick={handleCardClick} />;
       })}
     </ul>
 
