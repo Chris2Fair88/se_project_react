@@ -46,6 +46,7 @@ line-height: 20px;
 }
 
 .modal__content{
+    font-family: 'Cabinet Grotesk';
     position: relative;
     padding: 28px 28px 36px;
     background-color: #fff;
@@ -63,7 +64,7 @@ line-height: 20px;
     flex-direction: column;
     padding: 0;
     width: 100%;
-
+    gap: 32px;
 }
 
 .modal__input {
@@ -79,6 +80,7 @@ line-height: 20px;
       
       .modal__input:last-of-type {
         margin-bottom: 0;
+        padding: 0;
       }
 
 

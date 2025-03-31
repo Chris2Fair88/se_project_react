@@ -12,7 +12,7 @@ import Footer from '../Footer/Footer';
 function App() {
 const [weatherData, setWeatherData] = useState({type: "", temp: 0, city: ""});
 const [activeModal, setActiveModal] = useState("");
-const [selectedCard, setSelectedCard] = useState("");
+const [selectedCard, setSelectedCard] = useState();
 const handleAddClick = () => {
   setActiveModal("add-garment");
 }
@@ -51,7 +51,7 @@ useEffect(() => {
             <input className="modal__input" type="url" id="link" placeholder="Image Url"/>
             </label>
             <fieldset className="modal__radio-buttons">
-            <legend>Select weather type:</legend>
+            <legend className="legend">Select weather type:</legend>
             <div className="modal__radio-button">
             <input 
             className="modal__radio-input"

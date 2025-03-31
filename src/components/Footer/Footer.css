@@ -5,13 +5,12 @@
 }
 
 .footer{
-    
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        padding: 0 40px;
-        margin-top: auto;
-        font-family: 'Cabinet Grotesk', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0 40px;
+    margin-top: auto;
+    font-family: 'Cabinet Grotesk', sans-serif;
 }
 
 
@@ -20,5 +19,7 @@
     margin: 0;
 
 }
+
+
 
 
