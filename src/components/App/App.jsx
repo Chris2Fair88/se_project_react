@@ -45,13 +45,11 @@ function App() {
         <Main weatherData={weatherData} 
         handleCardClick={handleCardClick} />
       </div>
-
       <ModalWithForm 
       title="New garment"
        buttonText="Add garment" 
        isOpen={activeModal === "add-garment"}
        onClose={onClose}>
-        
         <label htmlFor="name" className="modal__label">
           Name{""}
           <input className="modal__input" 
@@ -63,7 +61,7 @@ function App() {
           Image{""}
           <input className="modal__input" 
           type="url" 
-          id="link" 
+          id="imageurl" 
           placeholder="Image Url" />
         </label>
         <fieldset className="modal__radio-buttons">
