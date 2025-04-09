@@ -2,6 +2,7 @@
     font-family: 'Cabinet Grotesk';
     src: url(../../vendor/fonts/CabinetGrotesk-Regular.woff
     ) format('woff');
+    font-weight: 700;
 }
 
 .header{
@@ -17,6 +18,12 @@
     width: 89px;
     height: 40px;
     
+}
+
+.header__nav-container{
+    display: flex;
+    align-items: center;
+    margin-inline-start: auto;
 }
 
 .header__date-and-location {
