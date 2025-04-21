@@ -1,0 +1,60 @@
+@font-face {
+    font-family: 'Cabinet Grotesk';
+    src: url(../../vendor/fonts/CabinetGrotesk-Regular.woff) format('woff');
+    src: url(../../vendor/fonts/CabinetGrotesk-Regular.woff2) format('woff2');
+    font-weight: 700;
+}
+
+
+.toggle-switch{
+    width: 58px;
+    height: 28px;
+    border: 2px solid #7e7e7e;
+    border-radius: 20px;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+}
+
+.toggle-switch__checkbox{
+    opacity: 0;
+    position: relative;
+}
+
+.toggle-switch__circle{
+    position:absolute;
+    background-color: #000;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    left: 0;
+    transition: all 0.3s;
+}
+
+.toggle-switch__text{
+    position: absolute;
+    top: 6px;
+    color: #7e7e7e;
+}
+
+
+.toggle-switch__text_F{
+    left: 8px;
+}
+.toggle-switch__text_C{
+    right: 8px;
+}
+
+.toggle-switch__checkbox:checked ~.toggle-switch__circle{
+    left: 30px;
+}
+
+.toggle-switch__checkbox:not(:checked) ~ .toggle-switch__text_F{
+    color: white;
+}
+
+.toggle-switch__checkbox:checked ~ .toggle-switch__text_C{
+    color: white;
+}
+
+
