@@ -9,3 +9,8 @@
   max-width: 1360px;
   padding: 0 40px;
 }
+
+.page__main {
+  gap: 20px;
+  padding: 20px;
+}

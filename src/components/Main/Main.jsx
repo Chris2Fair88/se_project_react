@@ -1,9 +1,11 @@
+import React from "react";
+import { useContext } from "react";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import WeatherCard from "../WeatherCard/WeatherCard";
-import { defaultClothingItems } from "../../utils/constants";
 import ItemCard from "../ItemCard/ItemCard";
 import './Main.css';
-function Main({ weatherData, handleCardClick }) {
-
+function Main({ weatherData, handleCardClick, clothingItems }) {
+const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   return (
     <main>
       <WeatherCard temperature={weatherData.temp.F}
@@ -11,9 +13,11 @@ function Main({ weatherData, handleCardClick }) {
         condition={weatherData.condition} />
       <section className="cards">
         <p className="cards__text">
-          Today is {weatherData.temp.F} &deg; F / You may want to wear:</p>
+          Today is {""}
+          {currentTemperatureUnit === "F" ? `${weatherData.temp.F}°F`: `${Math.round(weatherData.temp.C)}°C`}{""}
+          / You may want to wear:</p>
         <ul className="cards__list">
-          {defaultClothingItems
+          {clothingItems
             .filter((item) => {
               return item.weather === weatherData.type;
             })

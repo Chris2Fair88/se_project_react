@@ -1,22 +1,30 @@
-import { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
 import './App.css'
 import Header from '../Header/Header'
 import Main from '../Main/Main'
-import ModalWithForm from '../ModalWithForm/ModalWithForm';
+import AddItemModal from '../AddItemModal/AddItemModal';
 import ItemModal from '../ItemModal/ItemModal';
+import SideBar from '../SideBar/SideBar';
+import Profile from '../Profile/Profile';
 import { processWeatherData } from '../../utils/weatherApi';
 import { getWeather } from '../../utils/weatherApi';
 import { coordinates, APIkey } from '../../utils/constants';
-import CurrentTemperatureUnitContext  from '../../contexts/CurrentTemperatureUnit';
+import CurrentTemperatureUnitContext  from '../../contexts/CurrentTemperatureUnitContext';
 import Footer from '../Footer/Footer';
+import { defaultClothingItems } from '../../utils/constants';
 
 function App() {
-  const [weatherData, setWeatherData] = useState({ type: "", temp: 0, city: "" });
+  const [weatherData, setWeatherData] = 
+  useState({ type: "", temp: {F: 999, C: 999},condition: "",isDay: true, city: "" });
+
+  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState();
   const [currentTemperatureUnit, setcurrentTemperatureUnit] = useState("F");
   const handleToggleSwitchChange = () => {
-    setcurrentTemperatureUnit(setcurrentTemperatureUnit === "F" ? "C" : "F");
+    setcurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   }
   const handleAddClick = () => {
     setActiveModal("add-garment");
@@ -27,6 +35,21 @@ function App() {
   const handleCardClick = (card) => {
     setActiveModal("preview");
     setSelectedCard(card);
+  }
+
+  const handleLogout = () => {
+    localStorage.clear();
+  };
+
+
+
+  const handleSideBarToggle = () => {
+    setIsSideBarOpen(!isSideBarOpen);
+  };
+
+  const handleAddItemModalSubmit = ({name, imageUrl, weather}) => {
+    setClothingItems([{ name, link: imageUrl, weather }, ...clothingItems]);
+    onClose();
   }
 
   useEffect(() => {
@@ -43,75 +66,45 @@ function App() {
 
   return (
     <CurrentTemperatureUnitContext.Provider 
-    value={{currentTemperatureUnit, handleToggleSwitchChange}}>
-    <div className='page'>
-      <div className='page__content'>
-        <Header handleAddClick={handleAddClick}
-         handleCardClick={handleCardClick} 
-         weatherData={weatherData} />
-        <Main weatherData={weatherData} 
-        handleCardClick={handleCardClick} />
-      </div>
-      <ModalWithForm 
-      title="New garment"
-       buttonText="Add garment" 
-       isOpen={activeModal === "add-garment"}
-       onClose={onClose}>
-        <label htmlFor="name" className="modal__label">
-          Name{""}
-          <input className="modal__input" 
-          type="text" 
-          id="name" 
-          placeholder="Name" />
-        </label>
-        <label htmlFor="imageurl" className="modal__label">
-          Image{""}
-          <input className="modal__input" 
-          type="url" 
-          id="imageurl" 
-          placeholder="Image Url" />
-        </label>
-        <fieldset className="modal__radio-buttons">
-          <legend className="legend">Select weather type:</legend>
-          <div className="modal__radio-button">
-            <input
-              className="modal__radio-input"
-              type="radio"
-              id="hot"
-              name="weather"
-              value="hot"
+      value={{currentTemperatureUnit, handleToggleSwitchChange}}>
+      <BrowserRouter>
+        <div className='page'>
+          <div className='page__content'>
+            <Header 
+              handleAddClick={handleAddClick}
+              handleCardClick={handleCardClick} 
+              weatherData={weatherData} 
+              handleSideBarToggle={handleSideBarToggle} 
             />
-            <label className="modal__radio-label" htmlFor="hot">Hot</label>
+            
+            {isSideBarOpen ? <SideBar handleLogout={handleLogout} /> : null }
+            
+            <div className='page__main'>
+              <Routes>
+                <Route 
+                  path="/" 
+                  element={
+                    <Main 
+                      weatherData={weatherData} 
+                      handleCardClick={handleCardClick}
+                      clothingItems={clothingItems} 
+                    />
+                  } 
+                />
+                < Route path="/profile" element={<Profile />} />
+              </Routes>
+            </div>
           </div>
-          <div className="modal__radio-button">
-            <input
-              className="modal__radio-input"
-              type="radio"
-              id="warm"
-              name="weather"
-              value="warm"
-            />
-            <label className="modal__radio-label" htmlFor="warm">Warm</label>
-          </div>
-          <div className="modal__radio-button">
-            <input
-              className="modal__radio-input"
-              type="radio"
-              id="cold"
-              name="weather"
-              value="cold"
-            />
-            <label className="modal__radio-label" htmlFor="cold">Cold</label>
-          </div>
-        </fieldset>
-      </ModalWithForm>
-      <ItemModal activeModal={activeModal} card={selectedCard} onClose={onClose} />
-      <Footer />
-    </div>
+          <AddItemModal
+           isOpen={activeModal === "add-garment"}
+           onClose={onClose} 
+           onAddItemModalSubmit={handleAddItemModalSubmit}/>
+          <ItemModal activeModal={activeModal} card={selectedCard} onClose={onClose} />
+          <Footer />
+        </div>
+      </BrowserRouter>
     </CurrentTemperatureUnitContext.Provider>
-
-
-  )
+  );
 }
 
 export default App
