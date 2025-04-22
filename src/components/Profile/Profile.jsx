@@ -3,7 +3,7 @@ import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import './Profile.css';
 
-function Profile() {
+function Profile({handleCardClick}) {
     return (
         <div className="profile">
             <div className="profile__container">
@@ -11,7 +11,7 @@ function Profile() {
                     <SideBar />
                 </div>
                 <div className="profile__clothes-section">
-                    <ClothesSection />
+                    <ClothesSection handleCardClick={handleCardClick}/>
                 </div>
             </div>
         </div>

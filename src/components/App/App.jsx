@@ -13,6 +13,7 @@ import { coordinates, APIkey } from '../../utils/constants';
 import CurrentTemperatureUnitContext  from '../../contexts/CurrentTemperatureUnitContext';
 import Footer from '../Footer/Footer';
 import { defaultClothingItems } from '../../utils/constants';
+import { getItems, newItems } from '../../utils/api';
 
 function App() {
   const [weatherData, setWeatherData] = 
@@ -63,6 +64,38 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+      getItems()
+      .then((data) => {
+        console.log(data);
+      }
+      )
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [])
+
+  useEffect(() => {
+    newItems()
+    .then((data) => {
+      console.log(data);
+    }
+    )
+    .catch((err) => {
+      console.error(err);
+    });
+}, [])
+
+useEffect(() => {
+  deleteItems()
+  .then((data) => {
+    console.log(data);
+  }
+  )
+  .catch((err) => {
+    console.error(err);
+  });
+}, [])
 
   return (
     <CurrentTemperatureUnitContext.Provider 
