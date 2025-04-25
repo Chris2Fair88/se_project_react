@@ -19,7 +19,7 @@ import { useState } from "react";
 
         const handleSubmit = (e) => {
             e.preventDefault();
-            onAddItemModalSubmit({name, link: imageUrl, weather});
+            onAddItemModalSubmit({name, imageUrl, weather});
             setName("");
             setImageUrl("");
             setWeather("");

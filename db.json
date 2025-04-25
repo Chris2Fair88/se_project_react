@@ -110,6 +110,42 @@
     },
     {
       "_id": 19
+    },
+    {
+      "_id": 20
+    },
+    {
+      "_id": 21
+    },
+    {
+      "_id": 22
+    },
+    {
+      "_id": 23
+    },
+    {
+      "_id": 24
+    },
+    {
+      "_id": 25
+    },
+    {
+      "_id": 26
+    },
+    {
+      "_id": 27
+    },
+    {
+      "_id": 28
+    },
+    {
+      "_id": 29
+    },
+    {
+      "name": "New Jeans",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Cap.png?etag=f3dad389b22909cafa73cff9f9a3d591",
+      "weather": "warm",
+      "_id": 30
     }
   ]
 }

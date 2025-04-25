@@ -1,7 +1,3 @@
-@font-face {
-    font-family: 'Cabinet Grotesk';
-    src: url('../../fonts/CabinetGrotesk-Regular.woff') format('woff');
-}
 
 .modal{
     display: flex;
