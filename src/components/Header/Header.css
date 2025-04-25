@@ -1,9 +1,4 @@
-@font-face {
-    font-family: 'Cabinet Grotesk';
-    src: url(../../vendor/fonts/CabinetGrotesk-Regular.woff
-    ) format('woff');
-    font-weight: 700;
-}
+
 
 .header{
     display: flex;

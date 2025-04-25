@@ -1,8 +1,3 @@
-@font-face {
-    font-family: 'Cabinet Grotesk', sans-serif;
-    src: url('../../vendor/fonts/CabinetGrotesk-Regular.woff') format('woff');
-    font-weight: 700;
-}
 
 .cards__list{
     display: flex;
