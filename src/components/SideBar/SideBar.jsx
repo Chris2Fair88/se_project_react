@@ -7,11 +7,11 @@ function SideBar() {
     return (
         <div className="sidebar">
             <div className="sidebar__user-container">
-                <p className="sidebar__username">
-                    Terrence Tegegne</p>
-                <img className="sidebar__avatar"
+            <img className="sidebar__avatar"
                     src={avatar}
                     alt='profile avatar for Terrence Tegegne' />
+                <p className="sidebar__username">
+                    Terrence Tegegne</p>
             </div>
             </div>
     )

@@ -80,3 +80,14 @@
     justify-content: center;
     align-items: center;
 }
+
+.modal__delete-btn{
+    font-family: Cabinet Grotesk;
+font-weight: 700;
+font-size: 20px;
+line-height: 24px;
+letter-spacing: 0%;
+color: #FF4D00;
+background: transparent;
+border: none;
+}
