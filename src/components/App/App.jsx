@@ -100,7 +100,7 @@ function App() {
           .catch((err) => {
          console.error("Failed to fetch items:", err.message); }
         ); 
-      }, [])
+      }, []);
 
 
 
@@ -133,7 +133,16 @@ function App() {
                     />
                   }
                 />
-                < Route path="/profile" element={<Profile />} />
+                < Route 
+                path="/profile" 
+                element={
+                    <Profile
+                      cards={clothingItems}
+                      onCardClick={handleCardClick}
+                      onAddNewClick={() => setActiveModal("create")}
+                    />
+                }
+              />
               </Routes>
             </div>
           </div>
