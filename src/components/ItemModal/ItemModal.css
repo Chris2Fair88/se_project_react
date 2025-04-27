@@ -44,7 +44,25 @@ padding: 0;
     border-top-right-radius: 16px;
 }
 
+.modal__caption{
+    margin-bottom: 12px;
+    font-size: 20px;
+}
+
+.modal__weather{
+    font-size: 20px;
+    margin-top: 0;
+}
+
+.modal__delete-btn{
+    cursor: pointer;
+    
+}
+
 .modal__footer_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
     padding: 0 32px;
     background-color: white;
     border-bottom-right-radius: 16px;
