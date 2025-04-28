@@ -1,13 +1,16 @@
 const baseUrl = "http://localhost:3001";
+
+const checkResponse = (res) => {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(new Error(`Error: ${res.status}`));
+};
+
 const getItems = () => {
   return fetch(`${baseUrl}/items`, {
     method: "GET",
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(new Error(`Error: ${res.status}`));
-  });
+  }).then(checkResponse);
 };
 
 const newItems = (inputData = {}) => {
@@ -21,22 +24,13 @@ const newItems = (inputData = {}) => {
       imageUrl: inputData.imageUrl,
       weather: inputData.weather,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(new Error(`Error: ${res.status}`));
-  });
+  }).then(checkResponse);
 };
 
 const deleteItems = (id) => {
   return fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(new Error(`Error: ${res.status}`));
-  });
+  }).then(checkResponse);
 };
-export { getItems, newItems, deleteItems };
+
+export { getItems, newItems, deleteItems, checkResponse };

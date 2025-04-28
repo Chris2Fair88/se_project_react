@@ -7,23 +7,23 @@ function DeleteConfirmationModal({ isOpen, onClose, onCardDelete, itemName }) {
             <div className="delete__modal-overlay" onClick={onClose}>
                 <div className="delete__modal-container">
                     <div className="delete__modal-content">
-                <button className="delete__modal-close" type="button" onClick={onClose}>
-                    <img src={closeIcon} alt="Close modal" />
-                </button>
-                <div className='delete__warning-container'>
-                <p className="delete__modal-warning">
-                    Are you sure you want to delete this item?</p>
-                <p className="delete__modal-warning">
-                    This action is irreversible. <strong>{itemName}</strong>
-                </p>
-                </div>
-                <div className="delete__modal-actions">
-                    <button className="modal__button delete__modal_button_cancel" type="button" onClick={onClose}>
-                        Cancel
-                    </button>
-                    <button className="modal__button delete__modal_button_confirm" type="button" onClick={onCardDelete}>
-                        Yes, delete item
-                    </button>
+                        <button className="delete__modal-close" type="button" onClick={onClose}>
+                            <img src={closeIcon} alt="Close modal" />
+                        </button>
+                        <div className='delete__warning-container'>
+                            <p className="delete__modal-warning">
+                                Are you sure you want to delete this item?</p>
+                            <p className="delete__modal-warning">
+                                This action is irreversible. <strong>{itemName}</strong>
+                            </p>
+                        </div>
+                        <div className="delete__modal-actions">
+                            <button className="modal__button delete__modal_button_cancel" type="button" onClick={onClose}>
+                                Cancel
+                            </button>
+                            <button className="modal__button delete__modal_button_confirm" type="button" onClick={onCardDelete}>
+                                Yes, delete item
+                            </button>
                         </div>
                     </div>
                 </div>

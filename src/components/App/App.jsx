@@ -30,6 +30,7 @@ function App() {
     setcurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   }
   const handleAddClick = () => {
+    console.log("Add button clicked");
     setActiveModal("add-garment");
   };
   const onClose = () => {
@@ -53,7 +54,7 @@ function App() {
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     newItems({ name, imageUrl, weather })
       .then((newItem) => {
-        setClothingItems((prevItems) => [...prevItems, newItem]);
+        setClothingItems((prevItems) => [newItem, ...prevItems]);
 
         onClose();
       })
@@ -78,7 +79,7 @@ function App() {
       .catch((err) => {
         console.error(`Failed to delete card with ID ${cardToDelete}:`, err);
       });
-};
+  };
 
 
 
@@ -93,14 +94,16 @@ function App() {
       });
   }, []);
 
-  useEffect(() => 
-    { getItems()
-      .then((data) => { 
-        if (data) { setClothingItems(data); } })
-          .catch((err) => {
-         console.error("Failed to fetch items:", err.message); }
-        ); 
-      }, []);
+  useEffect(() => {
+    getItems()
+    .then((data) => {
+      if (data) { setClothingItems(data); }
+    })
+    .catch((err) => {
+      console.error("Failed to fetch items:", err.message);
+    }
+    );
+  }, []);
 
 
 
@@ -130,19 +133,20 @@ function App() {
                       weatherData={weatherData}
                       handleCardClick={handleCardClick}
                       clothingItems={clothingItems}
+                      handleAddClick={handleAddClick}
                     />
                   }
                 />
-                < Route 
-                path="/profile" 
-                element={
+                < Route
+                  path="/profile"
+                  element={
                     <Profile
                       cards={clothingItems}
                       onCardClick={handleCardClick}
-                      onAddNewClick={() => setActiveModal("create")}
+                      onAddNewClick={() => setActiveModal("add-garment")}
                     />
-                }
-              />
+                  }
+                />
               </Routes>
             </div>
           </div>
@@ -150,10 +154,10 @@ function App() {
             isOpen={activeModal === "add-garment"}
             onClose={onClose}
             onAddItemModalSubmit={handleAddItemModalSubmit} />
-          <ItemModal activeModal={activeModal} 
-          card={selectedCard} 
-          onClose={onClose} 
-          onCardDelete={handleCardDelete} />
+          <ItemModal activeModal={activeModal}
+            card={selectedCard}
+            onClose={onClose}
+            onCardDelete={handleCardDelete} />
           <DeleteConfirmationModal
             onClose={onClose}
             onCardDelete={handleConfirmDelete}
