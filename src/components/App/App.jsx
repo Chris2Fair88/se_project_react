@@ -143,7 +143,7 @@ function App() {
                     <Profile
                       cards={clothingItems}
                       onCardClick={handleCardClick}
-                      onAddNewClick={() => setActiveModal("add-garment")}
+                      handleAddClick={handleAddClick}
                     />
                   }
                 />

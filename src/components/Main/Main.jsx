@@ -3,9 +3,8 @@ import { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
-import ClothesSection from "../ClothesSection/ClothesSection";
 import './Main.css';
-function Main({ weatherData, handleCardClick, clothingItems, handleAddClick }) {
+function Main({ weatherData, handleCardClick, clothingItems }) {
 const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   return (
     <main>
@@ -35,8 +34,8 @@ const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
         </ul>
 
       </section>
-      <ClothesSection clothingItems={clothingItems} handleCardClick={handleCardClick} handleAddClick={handleAddClick}/>
-    </main>
+     
+      </main>
   );
 }
 
