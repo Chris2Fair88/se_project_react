@@ -3,12 +3,12 @@ import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection.jsx";
 import './Profile.css';
 
-function Profile({onCardClick, cards, handleAddClick}) {
+function Profile({onCardClick, cards, handleAddClick, onEditProfile}) {
     return (
         <div className="profile">
             <div className="profile__container">
                 <div className="profile__sidebar">
-                    <SideBar />
+                    <SideBar handleLogout={handleLogout} />
                 </div>
                 <div className="profile__clothes-section">
                     <ClothesSection clothingItems={cards} handleCardClick={onCardClick} handleAddClick={handleAddClick}/>

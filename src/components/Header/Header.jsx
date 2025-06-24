@@ -1,10 +1,12 @@
 import './Header.css';
 import logo from '../../assets/logo.svg';
-import avatar from '../../assets/avatar.png';
 import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
 import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Header({ handleAddClick, weatherData }) {
+function Header({ handleAddClick, weatherData, handleLogin, handleRegisterModal }) {
+  const currentUser = useContext(CurrentUserContext);
   const currentDate = new Date().toLocaleString('default',
      { month: 'long', day: 'numeric' });
   return (
@@ -26,13 +28,23 @@ function Header({ handleAddClick, weatherData }) {
         + Add Clothes
         </button>
         </div>
-        <Link to="/profile" className="header__user-container">
-        <p className="header__username">
-          Terrence Tegegne</p>
-        <img className="header__avatar"
-         src={avatar} 
-         alt='profile avatar for Terrence Tegegne' />
-        </Link>
+        {currentUser && currentUser.name ? (
+        <div className="header__user">
+          {currentUser.avatar ? (
+            <img src={currentUser.avatar} alt={currentUser.name} className="header__avatar" />
+          ) : (
+            <div className="header__avatar-placeholder">
+              {currentUser.name.charAt(0).toUpperCase()}
+            </div>
+          )}
+          <span>{currentUser.name}</span>
+        </div>
+      ) : (
+        <div>
+          <button className="button header__auth-button header__auth-button_signup" onClick={handleRegisterModal}>Sign Up</button>
+          <button className="button header__auth-button header__auth-button_login" onClick={handleLogin}>Log In</button>
+        </div>
+      )}
     </header>
   );
 }
