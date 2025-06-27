@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import React, { useContext } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Header({ handleAddClick, weatherData, handleLogin, handleRegisterModal }) {
+function Header({ handleAddClick, weatherData, handleLogin, handleRegisterModal, isLoggedIn }) {
   const currentUser = useContext(CurrentUserContext);
   const currentDate = new Date().toLocaleString('default',
      { month: 'long', day: 'numeric' });
@@ -22,11 +22,15 @@ function Header({ handleAddClick, weatherData, handleLogin, handleRegisterModal 
          </p>
          <div className="header__nav-container">
          <ToggleSwitch />   
-      <button onClick={handleAddClick} 
-      type="button" 
-      className="header__add-clothes-button">
-        + Add Clothes
-        </button>
+        {isLoggedIn && (
+          <button
+            onClick={handleAddClick}
+            type="button"
+            className="header__add-clothes-button"
+          >
+            + Add Clothes
+          </button>
+        )}
         </div>
         {currentUser && currentUser.name ? (
         <div className="header__user">
@@ -41,8 +45,18 @@ function Header({ handleAddClick, weatherData, handleLogin, handleRegisterModal 
         </div>
       ) : (
         <div>
-          <button className="button header__auth-button header__auth-button_signup" onClick={handleRegisterModal}>Sign Up</button>
-          <button className="button header__auth-button header__auth-button_login" onClick={handleLogin}>Log In</button>
+          <button
+            className="button header__auth-button header__auth-button_signup"
+            onClick={handleRegisterModal}
+          >
+            Sign Up
+          </button>
+          <button
+            className="button header__auth-button header__auth-button_login"
+            onClick={handleLogin}
+          >
+            Log In
+          </button>
         </div>
       )}
     </header>

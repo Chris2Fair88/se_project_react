@@ -125,10 +125,9 @@ function App() {
   };
 
   const handleEditProfileSubmit = (profileData) => {
-    // Call your API to update the profile here, e.g.:
-    // updateProfile(profileData, token)
-    //   .then((updatedUser) => setCurrentUser(updatedUser))
-    //   .catch(console.error);
+  updateProfile(profileData, token)
+     .then((updatedUser) => setCurrentUser(updatedUser))
+      .catch(console.error);
     setIsEditProfileOpen(false);
   };
 
@@ -190,9 +189,10 @@ function App() {
             <div className='page__content'>
               <Header
                 handleAddClick={handleAddClick}
-                handleCardClick={handleCardClick}
                 weatherData={weatherData}
-                handleSideBarToggle={handleSideBarToggle}
+                handleLogin={() => setActiveModal("login")}
+                handleRegisterModal={() => setActiveModal("register")}
+                isLoggedIn={isLoggedIn}
               />
 
               {isSideBarOpen ? <SideBar handleLogout={handleLogout} /> : null}
@@ -244,11 +244,13 @@ function App() {
   isOpen={activeModal === "register"}
   onClose={onClose}
   onRegister={handleRegistration}
+  onSwitchToLogin={() => setActiveModal("login")}
 />
 <LoginModal
   isOpen={activeModal === "login"}
   onClose={onClose}
   onLogin={handleLogin}
+  onSwitchToRegister={() => setActiveModal("register")}
 />
 <EditProfileModal
   isOpen={isEditprofileOpen}

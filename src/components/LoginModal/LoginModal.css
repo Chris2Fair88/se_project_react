@@ -1,0 +1,25 @@
+.modal__actions {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  gap: 8px;
+}
+
+/* Optional: Add a spacer if needed for alignment */
+.modal__actions-spacer {
+  flex: 0 0 auto;
+}
+
+/* Style for the switch button */
+.modal__switch-button {
+  background: none;
+  border: none;
+  color: #757575;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 8px;
+  padding: 0;
+  transition: color 0.2s;
+}
+
