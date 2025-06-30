@@ -20,6 +20,15 @@ export default function LoginModal({ isOpen, onClose, onLogin, onSwitchToRegiste
         onClose={onClose}
         onSubmit={handleLogin}
         contentClassName="modal__content modal__content--login"
+        actions={
+          <button
+            type="button"
+            className="modal__switch-button"
+            onClick={onSwitchToRegister}
+          >
+            or Register
+          </button>
+        }
       >
         <label htmlFor="login-email" className="modal__label">
           Email
@@ -45,17 +54,6 @@ export default function LoginModal({ isOpen, onClose, onLogin, onSwitchToRegiste
             required
           />
         </label>
-        <div className="modal__actions">
-          {/* The submit button will be rendered by ModalWithForm */}
-          <span className="modal__actions-spacer"></span>
-          <button
-            type="button"
-            className="modal__switch-button"
-            onClick={onSwitchToRegister}
-          >
-            or Register
-          </button>
-        </div>
       </ModalWithForm>
     </div>
   );
