@@ -21,3 +21,10 @@
   transition: color 0.2s;
 }
 
+.modal__error {
+  color: #d32f2f;
+  font-size: 0.9rem;
+  margin-top: 4px;
+  display: block;
+}
+

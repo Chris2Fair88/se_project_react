@@ -1,14 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./LoginModal.css";
 
 export default function LoginModal({ isOpen, onClose, onLogin, onSwitchToRegister }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
 
-  const handleLogin= (e) => {
+  const validate = () => {
+    const newErrors = {
+      password: !password ? "Incorrect password" : "",
+    };
+    setErrors(newErrors);
+    return !newErrors.password;
+  };
+
+  const handleLogin = (e) => {
     e.preventDefault();
-    onLogin({ email, password });
+    if (validate()) {
+      onLogin({ email, password });
+    }
   };
 
   return (
@@ -16,6 +27,7 @@ export default function LoginModal({ isOpen, onClose, onLogin, onSwitchToRegiste
       <ModalWithForm
         title="Log In"
         buttonText="Log In"
+        disabled={!password}
         isOpen={isOpen}
         onClose={onClose}
         onSubmit={handleLogin}
@@ -53,6 +65,7 @@ export default function LoginModal({ isOpen, onClose, onLogin, onSwitchToRegiste
             placeholder="Password"
             required
           />
+          {errors.password && <span className="modal__error">{errors.password}</span>}
         </label>
       </ModalWithForm>
     </div>
