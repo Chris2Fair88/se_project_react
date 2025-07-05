@@ -5,21 +5,12 @@ import "./LoginModal.css";
 export default function LoginModal({ isOpen, onClose, onLogin, onSwitchToRegister }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState("");
 
-  const validate = () => {
-    const newErrors = {
-      password: !password ? "Incorrect password" : "",
-    };
-    setErrors(newErrors);
-    return !newErrors.password;
-  };
-
-  const handleLogin = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (validate()) {
-      onLogin({ email, password });
-    }
+    onLogin({ email, password })
+      .catch(() => setError("Login failed. Please check your credentials."));
   };
 
   return (
@@ -30,7 +21,7 @@ export default function LoginModal({ isOpen, onClose, onLogin, onSwitchToRegiste
         disabled={!password}
         isOpen={isOpen}
         onClose={onClose}
-        onSubmit={handleLogin}
+        onSubmit={handleSubmit}
         contentClassName="modal__content modal__content--login"
         actions={
           <button
@@ -65,7 +56,7 @@ export default function LoginModal({ isOpen, onClose, onLogin, onSwitchToRegiste
             placeholder="Password"
             required
           />
-          {errors.password && <span className="modal__error">{errors.password}</span>}
+          {error && <span className="modal__error">{error}</span>}
         </label>
       </ModalWithForm>
     </div>

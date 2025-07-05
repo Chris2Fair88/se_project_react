@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import './App.css'
 import Header from '../Header/Header'
@@ -18,12 +18,13 @@ import CurrentTemperatureUnitContext from '../../contexts/CurrentTemperatureUnit
 import Footer from '../Footer/Footer';
 import { defaultClothingItems } from '../../utils/constants';
 import { getItems, newItems, deleteItems } from '../../utils/api';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { signup, signin } from '../../utils/auth';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
+import { signup, signin, updateProfile, checkToken } from '../../utils/auth';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
-
+import { addCardLike, removeCardLike } from '../../utils/api';
 
 function App() {
+  const navigate = useNavigate();
   const [weatherData, setWeatherData] =
     useState({ type: "", temp: { F: 999, C: 999 }, condition: "", isDay: true, city: "" });
 
@@ -40,7 +41,7 @@ function App() {
     setcurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   }
   const handleAddClick = () => {
-    console.log("Add button clicked");
+    if (!isLoggedIn) return;
     setActiveModal("add-garment");
   };
   const onClose = () => {
@@ -51,13 +52,14 @@ function App() {
     setSelectedCard(card);
   }
 
-  const handleLogin = useCallback((email, password) => {
-    signin(email, password)
+  const handleLogin = useCallback(({email, password}) => {
+    signin({email, password})
       .then((data) => {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
           setIsLoggedIn(true);
           setActiveModal("");
+          navigate("/profile");
         }
       })
       .catch(console.error);
@@ -115,7 +117,7 @@ function App() {
     .then(() => {
       setActiveModal("");
       handleLogin(userData.email, userData.password);
-      navigate("/");
+      navigate("/profile");
     })
     .catch(console.error);
   };
@@ -125,27 +127,26 @@ function App() {
   };
 
   const handleEditProfileSubmit = (profileData) => {
-  updateProfile(profileData, token)
-     .then((updatedUser) => setCurrentUser(updatedUser))
+    const token = localStorage.getItem("jwt"); // <-- Add this line
+    updateProfile(profileData, token)
+      .then((updatedUser) => setCurrentUser(updatedUser))
       .catch(console.error);
     setIsEditProfileOpen(false);
   };
 
   const handleCardLike = ({ id, isLiked }) => {
-  const token = localStorage.getItem("jwt");
-  if (!token) return;
-
-  (!isLiked
-    ? addCardLike(id, token)
-    : removeCardLike(id, token)
-  )
-    .then((updatedCard) => {
-      setClothingItems((cards) =>
-        cards.map((item) => (item._id === id ? updatedCard : item))
-      );
-    })
-    .catch((err) => console.log(err));
-};
+    const token = localStorage.getItem("jwt"); // <-- Define token here
+    (!isLiked
+      ? addCardLike(id, token)
+      : removeCardLike(id, token)
+    )
+      .then((updatedCard) => {
+        setClothingItems((cards) =>
+          cards.map((item) => (item._id === id ? updatedCard : item))
+        );
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     getWeather(coordinates, APIkey)
@@ -160,21 +161,23 @@ function App() {
 
   useEffect(() => {
     getItems()
-    .then((data) => {
-      if (data) { setClothingItems(data); }
-    })
-    .catch((err) => {
-      console.error("Failed to fetch items:", err.message);
-    }
-    );
+      .then((items) => {
+        const normalized = items.map(item => ({
+          ...item,
+          link: item.link || item.imageUrl || item.image // normalize for frontend
+        }));
+        setClothingItems(normalized);
+      })
+      .catch(console.error);
   }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
-      checkToken(token)
+      checkToken({ token })
         .then((user) => {
           setIsLoggedIn(true);
+          setCurrentUser(user);
         })
         .catch(() => setIsLoggedIn(false));
     }
@@ -182,10 +185,8 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <CurrentTemperatureUnitContext.Provider
-        value={{ currentTemperatureUnit, handleToggleSwitchChange }}>
-        <BrowserRouter>
-          <div className='page'>
+      <CurrentTemperatureUnitContext.Provider value={{ currentTemperatureUnit, handleToggleSwitchChange }}>
+      <div className='page'>
             <div className='page__content'>
               <Header
                 handleAddClick={handleAddClick}
@@ -220,6 +221,8 @@ function App() {
                         onCardClick={handleCardClick}
                         handleAddClick={handleAddClick}
                         onEditProfile={handleEditProfileModal}
+                        onCardLike={handleCardLike}
+                        handleLogout={handleLogout}
                       />
                       </ProtectedRoute>
                     }
@@ -260,9 +263,8 @@ function App() {
 />
             <Footer />
           </div>
-        </BrowserRouter>
-      </CurrentTemperatureUnitContext.Provider>
-    </CurrentUserContext.Provider>
+        </CurrentTemperatureUnitContext.Provider>
+      </CurrentUserContext.Provider>
   );
 }
 

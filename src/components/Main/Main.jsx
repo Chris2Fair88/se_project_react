@@ -6,8 +6,10 @@ import './Main.css';
 
 function Main({ weatherData, handleCardClick, clothingItems, onCardLike }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
-
-  return (
+console.log("Current weather type:", weatherData.type);
+console.log("Filtered items:", clothingItems.filter((item) => item.weather === weatherData.type));
+console.log("All clothing items:", clothingItems);
+return (
     <main>
       <WeatherCard
         temperature={weatherData.temp.F}
@@ -24,20 +26,14 @@ function Main({ weatherData, handleCardClick, clothingItems, onCardLike }) {
           / You may want to wear:
         </p>
         <ul className="cards__list">
-          {clothingItems
-            .filter((item) => {
-              return item.weather === weatherData.type;
-            })
-            .map((item) => {
-              return (
-                <ItemCard
-                  item={item}
-                  key={item._id}
-                  onCardClick={handleCardClick}
-                  onCardLike={onCardLike}
-                />
-              );
-            })}
+          {clothingItems.map((item) => (
+            <ItemCard
+              item={item}
+              key={item._id}
+              onCardClick={handleCardClick}
+              onCardLike={onCardLike}
+            />
+          ))}
         </ul>
       </section>
     </main>

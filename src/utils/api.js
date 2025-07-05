@@ -1,7 +1,7 @@
 const baseUrl = "http://localhost:3001";
 
 function getProtectedData(token) {
-  return fetch(`${BASE_URL}/protected-endpoint`, {
+  return fetch(`${baseUrl}/protected-endpoint`, {
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,

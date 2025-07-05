@@ -5,34 +5,22 @@ import { Link } from 'react-router-dom';
 import React, { useContext } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Header({ handleAddClick, weatherData, handleLogin, handleRegisterModal, isLoggedIn }) {
+function Header({ weatherData, handleLogin, handleRegisterModal, isLoggedIn, handleLogout }) {
   const currentUser = useContext(CurrentUserContext);
-  const currentDate = new Date().toLocaleString('default',
-     { month: 'long', day: 'numeric' });
+  const currentDate = new Date().toLocaleString('default', { month: 'long', day: 'numeric' });
+
   return (
     <header className="header">
       <Link to="/" className="header__logo-container">
-      <img className="header__logo" 
-      src={logo} 
-      alt='WTWR Logo' />
+        <img className="header__logo" src={logo} alt="WTWR Logo" />
       </Link>
       <p className="header__date-and-location">
-        {currentDate},
-         {weatherData.city}
-         </p>
-         <div className="header__nav-container">
-         <ToggleSwitch />   
-        {isLoggedIn && (
-          <button
-            onClick={handleAddClick}
-            type="button"
-            className="header__add-clothes-button"
-          >
-            + Add Clothes
-          </button>
-        )}
-        </div>
-        {currentUser && currentUser.name ? (
+        {currentDate}, {weatherData?.city}
+      </p>
+      <div className="header__nav-container">
+        <ToggleSwitch />
+      </div>
+      {currentUser?.name ? (
         <div className="header__user">
           {currentUser.avatar ? (
             <img src={currentUser.avatar} alt={currentUser.name} className="header__avatar" />
@@ -42,6 +30,13 @@ function Header({ handleAddClick, weatherData, handleLogin, handleRegisterModal,
             </div>
           )}
           <span>{currentUser.name}</span>
+          <button
+            className="button header__auth-button header__auth-button_logout"
+            onClick={handleLogout}
+            aria-label="Sign out"
+          >
+            Sign Out
+          </button>
         </div>
       ) : (
         <div>
