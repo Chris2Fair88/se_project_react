@@ -30,6 +30,9 @@ function Header({ weatherData, handleLogin, handleRegisterModal, isLoggedIn, han
             </div>
           )}
           <span>{currentUser.name}</span>
+          <Link to="/profile" className="header__profile-link">
+            Profile
+          </Link>
           <button
             className="button header__auth-button header__auth-button_logout"
             onClick={handleLogout}

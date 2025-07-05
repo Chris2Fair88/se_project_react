@@ -84,6 +84,16 @@
   transition: none;
 }
 
+.header__profile-link {
+  margin: 0 12px;
+  color: #000;
+  text-decoration: none;
+  font-weight: 500;
+}
+.header__profile-link:hover {
+  text-decoration: underline;
+}
+
 
 
 
