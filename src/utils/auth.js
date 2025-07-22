@@ -21,7 +21,7 @@ export const checkToken = ({ token }) => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
 };
@@ -31,7 +31,7 @@ export const updateProfile = ({ name, avatar, token }) => {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ name, avatar }),
   }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));

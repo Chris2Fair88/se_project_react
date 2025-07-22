@@ -16,7 +16,7 @@
 .header__nav-container{
     display: flex;
     align-items: center;
-    margin-inline-start: auto;
+    margin-left: auto;
 }
 
 .header__date-and-location {
@@ -27,12 +27,20 @@
 
 }
 
-.header__add-clothes-button{
-    margin: 0 20px 0 auto;
-    font-weight: 700;
-    font-size: 20px;
-    border: 0;
-    cursor: pointer;
+.header__add-clothes-btn {
+  font-family: 'Cabinet-Grotesk', Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 20px; /* adjust spacing as needed */
+  padding: 0;
+}
+
+.header__add-clothes-btn:hover {
+  color: #000;
 }
 
 .header__user-container{
@@ -44,8 +52,9 @@
 }
 
 .header__username{
-    margin: 0;
+    margin-left: 20px;
     font-weight: 700;
+    font-size: 20px;
     
 }
 
@@ -66,9 +75,10 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  font-size: 1.5rem;
+  font-size: 24px;
   font-weight: bold;
   text-transform: uppercase;
+  margin-left: 12px;
 }
 
 .header__auth-button {

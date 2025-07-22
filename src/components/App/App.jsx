@@ -53,19 +53,22 @@ function App() {
   }
 
   const handleLogin = useCallback(({email, password}) => {
-    signin({email, password})
+    return signin({email, password})
       .then((data) => {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
           setIsLoggedIn(true);
           setActiveModal("");
           navigate("/profile");
+        } else {
+          return Promise.reject();
         }
-      })
-      .catch(console.error);
+    
+      });
   }, []);
 
   const handleLogout = () => {
+    console.log("Logging out...");
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
     setCurrentUser({});
@@ -126,12 +129,18 @@ function App() {
     setIsEditProfileOpen(true);
   };
 
-  const handleEditProfileSubmit = (profileData) => {
-    const token = localStorage.getItem("jwt"); // <-- Add this line
-    updateProfile(profileData, token)
-      .then((updatedUser) => setCurrentUser(updatedUser))
+  const handleEditProfileSubmit = ({ name, avatar }) => {
+    const token = localStorage.getItem("jwt");
+    updateProfile({
+      name,
+      avatar: avatar || "https://practicum-content.s3.us-west-1.amazonaws.com/avatars/default-avatar.png",
+      token,
+    })
+      .then((updatedUser) => {
+        setCurrentUser(updatedUser);
+        setIsEditProfileOpen(false);
+      })
       .catch(console.error);
-    setIsEditProfileOpen(false);
   };
 
   const handleCardLike = ({ id, isLiked }) => {
@@ -171,17 +180,30 @@ function App() {
       .catch(console.error);
   }, []);
 
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
-      checkToken({ token })
+      checkToken(token)
         .then((user) => {
           setIsLoggedIn(true);
           setCurrentUser(user);
+          setIsAuthChecked(true);
         })
-        .catch(() => setIsLoggedIn(false));
+        .catch(() => {
+          setIsLoggedIn(false);
+          setCurrentUser({});
+          localStorage.removeItem("jwt");
+          setIsAuthChecked(true);
+        });
+    } else {
+      setIsLoggedIn(false);
+      setCurrentUser({});
+      setIsAuthChecked(true);
     }
   }, []);
+
+  console.log(currentUser);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -217,6 +239,7 @@ function App() {
                     element={
                       <ProtectedRoute isLoggedIn={isLoggedIn}>
                       <Profile
+                      currentUser={currentUser}
                         cards={clothingItems}
                         onCardClick={handleCardClick}
                         handleAddClick={handleAddClick}
@@ -258,7 +281,7 @@ function App() {
 <EditProfileModal
   isOpen={isEditprofileOpen}
   onClose={() => setIsEditProfileOpen(false)}
-  onEditProfile={handleEditProfileSubmit}
+  onUpdateUser={handleEditProfileSubmit}
   currentUser={currentUser}
 />
             <Footer />
