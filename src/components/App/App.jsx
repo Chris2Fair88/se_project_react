@@ -133,7 +133,7 @@ function App() {
     const token = localStorage.getItem("jwt");
     updateProfile({
       name,
-      avatar: avatar || "https://practicum-content.s3.us-west-1.amazonaws.com/avatars/default-avatar.png",
+      avatar: avatar || "",
       token,
     })
       .then((updatedUser) => {
@@ -184,7 +184,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
-      checkToken(token)
+      checkToken({ token })
         .then((user) => {
           setIsLoggedIn(true);
           setCurrentUser(user);
@@ -234,19 +234,23 @@ function App() {
                       />
                     }
                   />
-                  < Route
+                  <Route
                     path="/profile"
                     element={
                       <ProtectedRoute isLoggedIn={isLoggedIn}>
-                      <Profile
-                      currentUser={currentUser}
-                        cards={clothingItems}
-                        onCardClick={handleCardClick}
-                        handleAddClick={handleAddClick}
-                        onEditProfile={handleEditProfileModal}
-                        onCardLike={handleCardLike}
-                        handleLogout={handleLogout}
-                      />
+                        {isAuthChecked ? (
+                          <Profile
+                            currentUser={currentUser}
+                            cards={clothingItems}
+                            onCardClick={handleCardClick}
+                            handleAddClick={handleAddClick}
+                            onEditProfile={handleEditProfileModal}
+                            onCardLike={handleCardLike}
+                            handleLogout={handleLogout}
+                          />
+                        ) : (
+                          <div>Loading...</div>
+                        )}
                       </ProtectedRoute>
                     }
                   />

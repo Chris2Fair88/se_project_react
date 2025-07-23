@@ -10,6 +10,7 @@ function Profile({
   handleLogout,
   onCardLike,
 }) {
+    console.log("First initial:", currentUser?.name?.charAt(0).toUpperCase());
   return (
     <section className="profile">
       <div className="profile__sidebar">
