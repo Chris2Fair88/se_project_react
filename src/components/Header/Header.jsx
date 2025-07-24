@@ -2,11 +2,9 @@ import './Header.css';
 import logo from '../../assets/logo.svg';
 import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
 import { Link } from 'react-router-dom';
-import React, { useContext } from 'react';
-import CurrentUserContext from '../../contexts/CurrentUserContext';
+import React from 'react';
 
-function Header({ weatherData, handleLogin, handleRegisterModal, isLoggedIn, handleLogout, handleAddClick }) {
-  const currentUser = useContext(CurrentUserContext);
+function Header({ weatherData, handleLogin, handleRegisterModal, isLoggedIn, handleLogout, handleAddClick, currentUser }) {
   const currentDate = new Date().toLocaleString('default', { month: 'long', day: 'numeric' });
 
   return (
@@ -25,6 +23,7 @@ function Header({ weatherData, handleLogin, handleRegisterModal, isLoggedIn, han
               + Add clothes
             </button>
             <span className="header__username">{currentUser.name}</span>
+            <Link to="/profile" className="header__profile-link"></Link>
             {currentUser.avatar ? (
               <img src={currentUser.avatar} alt={currentUser.name} className="header__avatar" />
             ) : (

@@ -9,7 +9,6 @@ import DeleteConfirmationModal from '../DeleteConfirmationModal/DeleteConfirmati
 import RegisterModal from '../RegisterModal/RegisterModal';
 import LoginModal from '../LoginModal/LoginModal';
 import EditProfileModal from '../EditProfileModal/EditProfileModal';
-import SideBar from '../SideBar/SideBar';
 import Profile from '../Profile/Profile';
 import { processWeatherData } from '../../utils/weatherApi';
 import { getWeather } from '../../utils/weatherApi';
@@ -29,7 +28,6 @@ function App() {
     useState({ type: "", temp: { F: 999, C: 999 }, condition: "", isDay: true, city: "" });
 
   const [clothingItems, setClothingItems] = useState(defaultClothingItems);
-  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState();
   const [currentTemperatureUnit, setcurrentTemperatureUnit] = useState("F");
@@ -77,9 +75,7 @@ function App() {
 
 
 
-  const handleSideBarToggle = () => {
-    setIsSideBarOpen(!isSideBarOpen);
-  };
+
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     newItems({ name, imageUrl, weather })
@@ -209,16 +205,18 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <CurrentTemperatureUnitContext.Provider value={{ currentTemperatureUnit, handleToggleSwitchChange }}>
       <div className='page'>
-            <div className='page__content'>
+        <div className='page__content'>
+          {isAuthChecked && (
+            <>
               <Header
                 handleAddClick={handleAddClick}
                 weatherData={weatherData}
                 handleLogin={() => setActiveModal("login")}
                 handleRegisterModal={() => setActiveModal("register")}
                 isLoggedIn={isLoggedIn}
+                currentUser={currentUser}
               />
 
-              {isSideBarOpen ? <SideBar handleLogout={handleLogout} /> : null}
 
               <div className='page__main'>
                 <Routes>
@@ -256,21 +254,24 @@ function App() {
                   />
                 </Routes>
               </div>
-            </div>
-            <AddItemModal
-              isOpen={activeModal === "add-garment"}
-              onClose={onClose}
-              onAddItemModalSubmit={handleAddItemModalSubmit} />
-            <ItemModal activeModal={activeModal}
-              card={selectedCard}
-              onClose={onClose}
-              onCardDelete={handleCardDelete} />
-            <DeleteConfirmationModal
-              onClose={onClose}
-              onCardDelete={handleConfirmDelete}
-              isOpen={activeModal === "delete-confirmation"}
-            />
-            <RegisterModal
+            </>
+          )}
+        </div>
+      </div>
+        <AddItemModal
+          isOpen={activeModal === "add-garment"}
+          onClose={onClose}
+          onAddItemModalSubmit={handleAddItemModalSubmit} />
+        <ItemModal activeModal={activeModal}
+          card={selectedCard}
+          onClose={onClose}
+          onCardDelete={handleCardDelete} />
+        <DeleteConfirmationModal
+          onClose={onClose}
+          onCardDelete={handleConfirmDelete}
+          isOpen={activeModal === "delete-confirmation"}
+        />
+        <RegisterModal
   isOpen={activeModal === "register"}
   onClose={onClose}
   onRegister={handleRegistration}
@@ -289,10 +290,9 @@ function App() {
   currentUser={currentUser}
 />
             <Footer />
-          </div>
-        </CurrentTemperatureUnitContext.Provider>
-      </CurrentUserContext.Provider>
+         
+      </CurrentTemperatureUnitContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }
-
-export default App
+export default App;
