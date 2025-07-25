@@ -78,10 +78,10 @@ function App() {
 
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    newItems({ name, imageUrl, weather })
+    const token = localStorage.getItem("jwt");
+    newItems({ name, imageUrl, weather }, token)
       .then((newItem) => {
         setClothingItems((prevItems) => [newItem, ...prevItems]);
-
         onClose();
       })
       .catch((err) => console.error(err));
@@ -94,7 +94,8 @@ function App() {
 
   const handleConfirmDelete = () => {
     if (!cardToDelete) return;
-    deleteItems(cardToDelete)
+    const token = localStorage.getItem("jwt");
+    deleteItems(cardToDelete, token)
       .then(() => {
         setClothingItems((prevItems) =>
           prevItems.filter((item) => item._id !== cardToDelete)
@@ -115,7 +116,7 @@ function App() {
     signup(userData)
     .then(() => {
       setActiveModal("");
-      handleLogin(userData.email, userData.password);
+      handleLogin({email: userData.email, password: userData.password});
       navigate("/profile");
     })
     .catch(console.error);

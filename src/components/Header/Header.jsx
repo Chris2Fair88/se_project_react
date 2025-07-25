@@ -22,8 +22,9 @@ function Header({ weatherData, handleLogin, handleRegisterModal, isLoggedIn, han
             <button className="header__add-clothes-btn" onClick={handleAddClick}>
               + Add clothes
             </button>
+            <Link to="/profile" className="header__profile-link">
             <span className="header__username">{currentUser.name}</span>
-            <Link to="/profile" className="header__profile-link"></Link>
+            </Link>
             {currentUser.avatar ? (
               <img src={currentUser.avatar} alt={currentUser.name} className="header__avatar" />
             ) : (
