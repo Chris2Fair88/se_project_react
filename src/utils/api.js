@@ -1,13 +1,5 @@
 const baseUrl = "http://localhost:3001";
 
-function getProtectedData(token) {
-  return fetch(`${baseUrl}/protected-endpoint`, {
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
-    },
-  }).then((res) => res.ok ? res.json() : Promise.reject(res.status));
-}
 
 const checkResponse = (res) => {
   if (res.ok) {
@@ -66,4 +58,4 @@ const removeCardLike = (id, token) => {
   }).then(checkResponse);
 };
 
-export { getItems, newItems, deleteItems, checkResponse, addCardLike, removeCardLike, getProtectedData };
+export { getItems, newItems, deleteItems, checkResponse, addCardLike, removeCardLike };

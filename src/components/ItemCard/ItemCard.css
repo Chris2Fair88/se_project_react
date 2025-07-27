@@ -33,7 +33,7 @@
     cursor: pointer;
 }
 
-.item__like-button--active {
+.item__like-button_active {
     color: red;
 }
 
