@@ -1,4 +1,6 @@
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = process.env.NODE_ENV === "production" 
+  ? "http://api.wtwr.homeonthewater.com"
+  : "http://localhost:3001";
 import { checkResponse } from "./api.js";
 
 export const signup = ({ name, avatar, email, password }) => {

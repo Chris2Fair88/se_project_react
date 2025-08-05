@@ -30,8 +30,10 @@ This project is the front-end client for the WTWR (What to Wear?) application. I
 
 ## Links
 
+- [Live Application](https://wtwr.homeonthewater.com)
 - [Figma Design](https://www.figma.com/file/DTojSwldenF9UPKQZd6RRb/Sprint-10%3A-WTWR)
 - [WTWR Backend Repository](http://github.com/Chris2Fair88/se_project_express )
+- [Back End API URL](https://api.wtwr.homeonthewater.com)
 
 ## Getting Started
 
