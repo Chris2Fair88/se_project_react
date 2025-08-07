@@ -1,5 +1,5 @@
 const baseUrl = process.env.NODE_ENV === "production"
- ? "http://api.wtwr.homeonthewater.com" 
+ ? "https://api.wtwr.homeonthewater.com" 
  : "http://localhost:3001";
 
 
